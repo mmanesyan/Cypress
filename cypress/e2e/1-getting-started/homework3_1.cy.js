@@ -16,10 +16,12 @@ describe('Login Tests', () => {
       .invoke('text')
       .then((text) => {
         const credentials = extractCredentials(text);
+	
+	cy.login(credentials.username, credentials.password);
 
-        cy.get('#username').type(credentials.username);
-        cy.get('#password').type(credentials.password);
-        cy.get('button[type="submit"]').click();
+        //cy.get('#username').type(credentials.username);
+        //cy.get('#password').type(credentials.password);
+        //cy.get('button[type="submit"]').click();
 
         cy.get('.flash.success')
           .should('be.visible')
@@ -32,7 +34,6 @@ describe('Login Tests', () => {
 
   it('display an error message', () => {
     cy.visit('https://the-internet.herokuapp.com/login');
-
     cy.get('#username').type('invalidUser');
     cy.get('#password').type('invalidPassword');
     cy.get('button[type="submit"]').click();
@@ -52,9 +53,10 @@ describe('Login Tests', () => {
       .then((text) => {
         const credentials = extractCredentials(text);
 
-        cy.get('#username').type(credentials.username);
-        cy.get('#password').type(credentials.password);
-        cy.get('button[type="submit"]').click();
+	cy.login(credentials.username, credentials.password);      
+        //cy.get('#username').type(credentials.username);
+        //cy.get('#password').type(credentials.password);
+        //cy.get('button[type="submit"]').click();
 
         cy.get('.flash.success').then((flashMessage) => {
           expect(flashMessage).to.be.visible;
